@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONLINE QUIZ APPLICATION</title>
+<link rel="stylesheet" href="style.css">
+<style media="screen">
+    *,
+    *:before,
+    *:after{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    body{
+        background-color: #080710;
+    }
+    .background{
+        width: 430px;
+        height: 520px;
+        position: absolute;
+        transform: translate(-50%,-50%);
+        left: 50%;
+        top: 50%;
+    }
+    .background .shape{
+        height: 200px;
+        width: 200px;
+        position: absolute;
+        border-radius: 50%;
+    }
+    .shape:first-child{
+        background: linear-gradient(
+            #1845ad,
+            #23a2f6
+        );
+        left: -80px;
+        top: 35px;
+    }
+    .shape:last-child{
+        background: linear-gradient(
+            to right,
+            #ff512f,
+            #f09819
+        );
+        right: -30px;
+        bottom: -80px;
+    }
+    form{
+        /*height: 500px;*/
+        width: 400px;
+        background-color: rgba(255,255,255,0.13);
+        position: absolute;
+        transform: translate(-50%,-50%);
+        top: 60%;
+        left: 50%;
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255,255,255,0.1);
+        box-shadow: 0 0 40px rgba(8,7,16,0.6);
+        padding: 70px 35px;
+    }
+    form *{
+        font-family: 'Poppins',sans-serif;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+        outline: none;
+        border: none;
+    }
+    form h3{
+        font-size: 32px;
+        font-weight: 500;
+        line-height: 42px;
+        text-align: center;
+    }
+    label{
+        display: block;
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    input{
+        display: block;
+        height: 50px;
+        width: 100%;
+        background-color: rgba(255,255,255,0.07);
+        border-radius: 3px;
+        padding: 0 10px;
+        margin-top: 8px;
+        font-size: 14px;
+        font-weight: 300;
+    }
+    ::placeholder{
+        color: #e5e5e5;
+    }
+    button
+    {
+        margin-top: 40px;
+        width: 100%;
+        background-color:   #23a2f6;
+        color: #080710;
+        padding: 15px 0;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 5px;
+        cursor: pointer;
+        position: relative;/**/
+        bottom:20px;/**/
+    }
+    .error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+#login-toggle {
+  margin-top: 10px;
+  position: absolute;
+  bottom: 25px; 
+  left: 50%;
+  display: inline-block;
+  transform: translateX(-50%);
+  width: 330px;
+  z-index: 1; 
+}
+#signup-toggle {
+  width: 330px;
+  display: inline-block;
+  margin-top: 15px;
+  position: absolute;
+  bottom: 25px; 
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2; 
+}
+
+
+
+
+</style>
+</head>
+<body>
+<div class="text">
+    <p>Trivia Quest: </p>
+    <p>
+        <span class="word wisteria">Quirky.</span>
+        <span class="word belize">Clever.</span>
+        <span class="word pomegranate">Witty.</span>
+    </p>
+</div>
+
+<!-- Login Form -->
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+
+<form id="login-form">
+    <h3>Login Here</h3>
+    <label for="username">Username</label>
+    <input type="text" placeholder="Email or Phone" id="username">
+    <label for="password">Password</label>
+    <input type="password" placeholder="Password" id="password">
+    <button type="submit">Log In</button>
+    <button type="button" id="signup-toggle">Sign Up</button>
+</form>
+
+<!-- Sign Up Form -->
+<form id="signup-form" style="display: none;">
+    <h3>Sign Up Here</h3>
+    <label for="signup-username">Username</label>
+    <input type="text" placeholder="Email or Phone" id="signup-username">
+    <div id="signup-username-error" class="error-message"></div> <!-- New element for username error -->
+    <label for="signup-password">Password</label>
+    <input type="password" placeholder="Password" id="signup-password">
+    <div id="signup-password-error" class="error-message"></div> <!-- New element for password error -->
+    <button type="submit">Sign Up</button>
+    <button type="button" id="login-toggle">Back to Login</button>
+</form>
+
+
+
+<script src="script.js"></script>
+<script>
+const users = [
+    { email: "swethasuresh263@gmail.com", password: "Swetha@2603" },
+    { email: "21cs173@kpriet.ac.in", password: "Swe@2603" }
+];
+
+document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
+    
+    
+    const user = users.find(user => user.email === username && user.password === password);
+    if (user) {
+        alert('Login successful!');
+        window.location.href = 'quiz.html';
+    } else {
+        alert('Invalid email or password. Please sign up if you are a new user.');
+    }
+});
+
+document.getElementById('signup-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const isValid = validateSignUp();
+    if (isValid) {
+        const usernameInput = document.getElementById('signup-username');
+        const passwordInput = document.getElementById('signup-password');
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+        
+        
+        const existingUser = users.find(user => user.email === username);
+        if (existingUser) {
+            alert('An account with this email already exists. Please log in.');
+        } else {
+            
+            users.push({ email: username, password: password });
+            alert('Sign up successful! You can now log in with your new account.');
+        }
+    }
+});
+
+
+
+
+       document.getElementById('signup-toggle').addEventListener('click', function() {
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('signup-form').style.display = 'block';
+    });
+
+    document.getElementById('login-toggle').addEventListener('click', function() {
+        document.getElementById('signup-form').style.display = 'none';
+        document.getElementById('login-form').style.display = 'block';
+    });
+
+    // Form validation
+   
+    document.getElementById('signup-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        validateSignUp();
+    });
+
+    function validateSignUp() {
+        const usernameInput = document.getElementById('signup-username');
+        const passwordInput = document.getElementById('signup-password');
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+        const usernameError = document.getElementById('signup-username-error');
+        const passwordError = document.getElementById('signup-password-error');
+
+       
+        usernameError.textContent = '';
+        passwordError.textContent = '';
+        usernameInput.classList.remove('error');
+        passwordInput.classList.remove('error');
+
+        let isValid = true;
+
+       
+        if (username === '') {
+            usernameError.textContent = 'Username is required';
+            usernameInput.classList.add('error');
+            isValid = false;
+        } else if (!isValidEmail(username)) {
+            usernameError.textContent = 'Please enter a valid email';
+            usernameInput.classList.add('error');
+            isValid = false;
+        }
+
+       
+        if (password === '') {
+            passwordError.textContent = 'Password is required';
+            passwordInput.classList.add('error');
+            isValid = false;
+        } else if (!isValidPassword(password)) {
+            passwordError.textContent = 'Please enter a valid password';
+            passwordInput.classList.add('error');
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function isValidPassword(password) {
+
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return passwordRegex.test(password);
+    }
+
+</script>
+</script>
+</body>
+</html>

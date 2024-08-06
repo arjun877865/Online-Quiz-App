@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Score</title>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #080710;
+        }
+        .score-container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5); 
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        p {
+            margin: 10px 0;
+        }
+        .login-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .login-btn:hover {
+            background-color: #007bff;
+        }
+
+ 
+    </style>
+</head>
+<body>
+    <div class="score-container">
+        <h2>Quiz Score</h2>
+        <p>Congratulations! You've completed the quiz.</p>
+        <p>Your score is: <strong id="user-score"></strong></p>
+        <p>Thank you for playing!</p>
+        <button class="login-btn" onclick="returnToLogin()">Exit</button>
+    </div>
+
+    <script>
+       
+        const urlParams = new URLSearchParams(window.location.search);
+        const score = urlParams.get('score');
+        document.getElementById('user-score').textContent = score;
+      
+
+        function returnToLogin() {
+          
+            window.location.href = "index.html";
+        }
+
+
+    </script>
+</body>
+</html>
